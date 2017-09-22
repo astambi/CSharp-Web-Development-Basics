@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Server=.; Database=BlogDb;Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models

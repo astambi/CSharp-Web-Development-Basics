@@ -1,4 +1,4 @@
-﻿namespace DemoEFCore
+﻿namespace DemoEFCore.Data
 {
     using Microsoft.EntityFrameworkCore;
     using Models;

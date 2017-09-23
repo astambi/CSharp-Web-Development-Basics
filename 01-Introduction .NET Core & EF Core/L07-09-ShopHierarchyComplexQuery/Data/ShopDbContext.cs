@@ -54,19 +54,19 @@
             // Many-to-Many
             builder
                 .Entity<ItemOrder>()
-                .HasKey(oi => new { oi.ItemId, oi.OrderId });
+                .HasKey(io => new { io.ItemId, io.OrderId });
 
             builder
                 .Entity<Item>()
                 .HasMany(i => i.Orders)
                 .WithOne(io => io.Item)
-                .HasForeignKey(i => i.ItemId);
+                .HasForeignKey(io => io.ItemId);
 
             builder
                 .Entity<Order>()
                 .HasMany(o => o.Items)
                 .WithOne(io => io.Order)
-                .HasForeignKey(o => o.OrderId);
+                .HasForeignKey(io => io.OrderId);
 
             base.OnModelCreating(builder);
         }

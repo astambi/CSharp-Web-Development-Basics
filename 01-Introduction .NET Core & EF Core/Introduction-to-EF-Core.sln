@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L05-ShopHierarchy", "L05-Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L06-ShopHierarchyExtended", "L06-ShopHierarchyExtended\L06-ShopHierarchyExtended.csproj", "{076943B2-3517-427C-99B5-E8107EEDEB8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L07-ShopHierarchyComplexQuery", "L07-09-ShopHierarchyComplexQuery\L07-ShopHierarchyComplexQuery.csproj", "{F57FEE83-0A97-43E7-B1B7-E8D97A2740A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L07-09-ShopHierarchyComplexQuery", "L07-09-ShopHierarchyComplexQuery\L07-09-ShopHierarchyComplexQuery.csproj", "{F57FEE83-0A97-43E7-B1B7-E8D97A2740A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoEFCore", "DemoEFCore\DemoEFCore.csproj", "{48266C24-C8F0-467B-8B9C-A4B99B1AD608}"
 EndProject

@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoEFCore", "DemoEFCore\De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoDatabaseFirst", "DemoDatabaseFirst\DemoDatabaseFirst.csproj", "{C33456CB-6582-4B34-9BCC-01DB7EDE9F18}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E01-StudentSystem", "E01-StudentSystem\E01-StudentSystem.csproj", "{50EE9D40-5B02-4E56-BCBD-32A98FB9BD25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E02-SocialNetwork", "E02-SocialNetwork\E02-SocialNetwork.csproj", "{763692BB-B991-4757-AB5D-72C05366EF44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{C33456CB-6582-4B34-9BCC-01DB7EDE9F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C33456CB-6582-4B34-9BCC-01DB7EDE9F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C33456CB-6582-4B34-9BCC-01DB7EDE9F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50EE9D40-5B02-4E56-BCBD-32A98FB9BD25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50EE9D40-5B02-4E56-BCBD-32A98FB9BD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50EE9D40-5B02-4E56-BCBD-32A98FB9BD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50EE9D40-5B02-4E56-BCBD-32A98FB9BD25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{763692BB-B991-4757-AB5D-72C05366EF44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{763692BB-B991-4757-AB5D-72C05366EF44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{763692BB-B991-4757-AB5D-72C05366EF44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{763692BB-B991-4757-AB5D-72C05366EF44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

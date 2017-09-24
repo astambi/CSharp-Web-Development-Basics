@@ -15,10 +15,6 @@
         // Task 4
         public DbSet<Tag> Tags { get; set; }
 
-
-
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             builder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=SocialNetworkDb;Integrated Security=True;");
@@ -101,7 +97,6 @@
                 .HasForeignKey(ua => ua.AlbumId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
             // One-to-Many
 
             // Albums (Task 3)
@@ -113,7 +108,6 @@
                 .HasOne(a => a.User)
                 .WithMany(u => u.Albums)
                 .HasForeignKey(a => a.UserId);
-
 
             base.OnModelCreating(builder);
         }

@@ -1,13 +1,13 @@
 ﻿namespace SocialNetwork.Core
 {
-    using Data;
     using Microsoft.EntityFrameworkCore;
-    using SocialNetwork.Models;
-    using SocialNetwork.Utils;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using SocialNetwork.Data;
+    using SocialNetwork.Models;
+    using SocialNetwork.Utils;
 
     public class Engine
     {
@@ -25,10 +25,8 @@
 
         public void Run()
         {
-            //// Initialize database 
-            InitializeDatabase();
-            Console.WriteLine("Database ready!");
-            Console.WriteLine("Seeding data. Please wait!");
+            // Initialize database 
+            InitializeDatabase();            
 
             // Seed data
             SeedUsers();                          // Profile pictures removed in Task 3
@@ -39,9 +37,10 @@
             SeedTags();                           // Task 4
             SeedTagsToAlbums();                   // Task 4
             SeedUsersToSharedAlbums();            // Task 5 & Modified for Task 6 UserRoles
-            Console.WriteLine("Done! Time to run some queries.");
 
-            //// Queries
+            Console.WriteLine("Seeding done! Running queries...");
+
+            // Queries
             using (var context = new SocialNetworkDbContext())
             {
                 PrintUsersWithFriendsAndStatuses(context);        // Task 2
@@ -815,6 +814,8 @@
                 context.Database.EnsureDeleted(); // for testing purposes only
 
                 context.Database.Migrate();
+
+                Console.WriteLine("Database ready!");
             }
         }
     }

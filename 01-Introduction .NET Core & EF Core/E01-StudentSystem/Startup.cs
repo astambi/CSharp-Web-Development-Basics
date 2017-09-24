@@ -21,11 +21,13 @@
         {
             using (var context = new StudentSystemDbContext())
             {
-                //Uncomment to Initialize Database and Seed Data
+                // Initialize Database
                 InitializeDatabase(context);
+
+                // Seed data
                 SeedInitialData(context);
                 SeedLicenses(context);
-                Console.WriteLine("Database ready!");
+                Console.WriteLine("Seeding done! Running queries...");
 
                 // Queries on the Initial Database (without licenses)
                 PrintStudentsWithHomeworkSubmissions(context);
@@ -437,10 +439,13 @@
         private static void InitializeDatabase(StudentSystemDbContext context)
         {
             Console.WriteLine("Initializing database...");
+
+            context.Database.EnsureDeleted(); // for testing purposes only
+            //context.Database.EnsureCreated(); // NB! creates a new db, if db exists => no action, cannot migrate db
+
             context.Database.Migrate();
 
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated(); // NB! creates a new db, if db exists => no action, cannot migrate db
+            Console.WriteLine("Database ready!");
         }
     }
 }

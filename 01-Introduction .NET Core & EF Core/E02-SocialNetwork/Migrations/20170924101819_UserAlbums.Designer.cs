@@ -6,15 +6,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using SocialNetwork.Data;
-using SocialNetwork.Models;
 using System;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(SocialNetworkDbContext))]
-    partial class SocialNetworkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170924101819_UserAlbums")]
+    partial class UserAlbums
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,8 +134,6 @@ namespace SocialNetwork.Migrations
                     b.Property<int>("UserId");
 
                     b.Property<int>("AlbumId");
-
-                    b.Property<int>("UserRole");
 
                     b.HasKey("UserId", "AlbumId");
 

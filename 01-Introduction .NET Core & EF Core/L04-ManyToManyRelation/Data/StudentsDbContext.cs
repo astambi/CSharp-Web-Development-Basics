@@ -13,7 +13,7 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Server=.;Database=StudentsDb;Integrated Security=True;");
+            builder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=StudentsDb;Integrated Security=True;");
 
             base.OnConfiguring(builder);
         }

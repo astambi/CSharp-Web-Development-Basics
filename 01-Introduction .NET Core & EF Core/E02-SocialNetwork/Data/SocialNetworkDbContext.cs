@@ -21,7 +21,7 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Server=.;Database=SocialNetworkDb;Integrated Security=True;");
+            builder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=SocialNetworkDb;Integrated Security=True;");
 
             base.OnConfiguring(builder);
         }
@@ -83,16 +83,36 @@
                 .WithOne(at => at.Tag)
                 .HasForeignKey(at => at.TagId);
 
+            // UserAlbum (Task 5)
+            builder
+                .Entity<UserAlbum>()
+                .HasKey(pa => new { pa.UserId, pa.AlbumId });
+
+            builder
+                .Entity<User>()
+                .HasMany(u => u.SharedAlbums)
+                .WithOne(ua => ua.User)
+                .HasForeignKey(ua => ua.UserId);
+
+            builder
+                .Entity<Album>()
+                .HasMany(a => a.SharedAlbums)
+                .WithOne(ua => ua.Album)
+                .HasForeignKey(ua => ua.AlbumId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             // One-to-Many
 
             // Albums (Task 3)
+            // Replaced by UserAlbum (Task 5)
+            // User navigation properties in Albums are not deleted on migration to SharesAlbums (UserAlbums)
+            // Existing data in Albums is transfered to SharedAlbums
             builder
                 .Entity<Album>()
                 .HasOne(a => a.User)
                 .WithMany(u => u.Albums)
                 .HasForeignKey(a => a.UserId);
-
 
 
             base.OnModelCreating(builder);

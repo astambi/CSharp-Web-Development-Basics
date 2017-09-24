@@ -25,7 +25,7 @@
         // Replaced by PictureAlbums (Task 3)
         //[MaxLength(1024)]
         //public byte[] ProfilePicture { get; set; }
-       
+
         public DateTime RegisteredOn { get; set; }
 
         public DateTime? LastTimeLoggedIn { get; set; }
@@ -40,7 +40,11 @@
         public ICollection<UserFriend> FriendshipsAccepted { get; set; } = new List<UserFriend>();
 
         // Replaces ProfilePicture (Task 3)
+        // Replaced by UserAlbum (Task 5)
+        // Do not delete nav property! Used for data transfer from Albums to UserAlbums (Task 5)
         public ICollection<Album> Albums { get; set; } = new List<Album>();
 
+        // Replaces Album (Task 5)
+        public ICollection<UserAlbum> SharedAlbums { get; set; } = new List<UserAlbum>();
     }
 }

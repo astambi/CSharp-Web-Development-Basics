@@ -11,7 +11,7 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Server=.;Database=EmployeesDb;Integrated Security=True;");
+            builder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=EmployeesDb;Integrated Security=True;");
 
             base.OnConfiguring(builder);
         }

@@ -21,7 +21,7 @@
                 req => new UserController().RegisterPost(req.FormData["name"]));
 
             appRouteConfig.Get(
-                "/user/{(?<name>[a-zA-Z]+)}",
+                "/user/{(?<name>[a-z]+)}",
                 req => new UserController().Details(req.UrlParameters["name"]));
         }
     }

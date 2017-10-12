@@ -5,8 +5,6 @@
     using Models;
     using Server.Http.Contracts;
     using System;
-    using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
 
     public class CakesController : Controller
@@ -60,7 +58,7 @@
                 var savedCakesDivs = this.cakesData
                     .All()
                     .Where(c => c.Name.ToLower().Contains(searchTerm.ToLower()))
-                    .Select(c => $@"<div>{c.Name} - ${c.Price:F2} <a href=""/shopping/add/{c.Id}?searchTerm={searchTerm}"">Order</a></div>");
+                    .Select(c => $@"<div>{c.Name} - ${c.Price:F2} <a href=""/shopping/add/{c.Id}?{searchTermKey}={searchTerm}"">Order</a></div>");
 
                 var results = "No cakes found";
 

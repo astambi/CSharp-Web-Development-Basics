@@ -5,7 +5,6 @@
     using Server.Http;
     using Server.Http.Contracts;
     using Server.Http.Response;
-    using System.Collections.Generic;
 
     public class AccountController : Controller
     {
@@ -22,8 +21,8 @@
             const string formNameKey = "name";
             const string formPasswordKey = "password";
 
-            if (!req.FormData.ContainsKey(formNameKey)
-                || !req.FormData.ContainsKey(formPasswordKey))
+            if (!req.FormData.ContainsKey(formNameKey) ||
+                !req.FormData.ContainsKey(formPasswordKey))
             {
                 return new BadRequestResponse();
             }
@@ -31,8 +30,8 @@
             var name = req.FormData[formNameKey];
             var password = req.FormData[formPasswordKey];
 
-            if (string.IsNullOrWhiteSpace(name)
-                || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(name) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 this.ViewData["error"] = "You have empty fields";
                 this.ViewData["showError"] = "block";

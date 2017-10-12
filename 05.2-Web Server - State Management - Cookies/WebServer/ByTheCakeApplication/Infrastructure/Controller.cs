@@ -13,7 +13,7 @@
         private const string DefaultPath = @"ByTheCakeApplication\Resources\{0}.html";
         private const string ContentPlaceholder = "{{{content}}}";
 
-        public Controller()
+        protected Controller()
         {
             this.ViewData = new Dictionary<string, string>();
         }

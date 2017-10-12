@@ -53,12 +53,12 @@
             }
             else
             {
-                var items = shoppingCart
-                    .Orders
+                var ordersInCart = shoppingCart.Orders;
+
+                var items = ordersInCart
                     .Select(i => $"<div>{i.Name} - ${i.Price:F2}</div><br />");
 
-                var totalPrice = shoppingCart
-                    .Orders
+                var totalPrice = ordersInCart
                     .Sum(i => i.Price);
 
                 this.ViewData["cartItems"] = string.Join(string.Empty, items);

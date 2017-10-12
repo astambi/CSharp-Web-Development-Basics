@@ -49,53 +49,21 @@
                 "/login",
                 req => new AccountController().Login(req));
 
-            appRouteConfig
-                .Post(
-                    "/logout",
-                    req => new AccountController().Logout(req));
+            appRouteConfig.Post(
+                "/logout",
+                req => new AccountController().Logout(req));
 
-            appRouteConfig
-                .Get(
-                    "/shopping/add/{(?<id>[0-9]+)}",
-                    req => new ShoppingController().AddToCart(req));
+            appRouteConfig.Get(
+                "/shopping/add/{(?<id>[0-9]+)}",
+                req => new ShoppingController().AddToCart(req));
 
-            appRouteConfig
-                .Get(
-                    "/cart",
-                    req => new ShoppingController().ShowCart(req));
+            appRouteConfig.Get(
+                "/cart",
+                req => new ShoppingController().ShowCart(req));
 
-            appRouteConfig
-                .Post(
-                    "/shopping/finish-order",
-                    req => new ShoppingController().FinishOrder(req));
-
-            //appRouteConfig.Post(
-            //    "/login",
-            //    req => new AccountController().Login(
-            //        req.FormData["username"], 
-            //        req.FormData["password"]));
-
-            //appRouteConfig.Get(
-            //    "/loginemail",
-            //    req => new AccountController().LoginToEmail());
-
-            //appRouteConfig.Post(
-            //    "/loginemail",
-            //    req => new AccountController().LoginToEmail(
-            //        req.FormData["username"], 
-            //        req.FormData["password"]));
-
-            //// Send Email TODO
-            //appRouteConfig.Get(
-            //    "/sendemail",
-            //    req => new AccountController().SendEmail());
-
-            //appRouteConfig.Post(
-            //    "/sendemail",
-            //    req => new AccountController().SendEmail(
-            //        req.FormData["recipient"], 
-            //        req.FormData["subject"], 
-            //        req.FormData["message"]));
+            appRouteConfig.Post(
+                "/shopping/finish-order",
+                req => new ShoppingController().FinishOrder(req));
         }
     }
 }

@@ -13,18 +13,22 @@
     {
         public void Configure(IAppRouteConfig appRouteConfig)
         {
-            appRouteConfig.Get(
-                "/",
-                req => new HomeController().Index());
+            appRouteConfig
+                .Get(
+                    "/",
+                    req => new HomeController().Index());
 
-            appRouteConfig.Get(
-                "/about",
-                req => new HomeController().About());
+            appRouteConfig
+                .Get(
+                    "/about",
+                    req => new HomeController().About());
 
-            appRouteConfig.Get(
-                "/search",
-                req => new ProductsController().Search(req));
+            appRouteConfig
+                .Get(
+                    "/search",
+                    req => new ProductsController().Search(req));
 
+            // Calculator
             appRouteConfig.Get(
                 "/calculator",
                 req => new CalculatorController().Calculate());

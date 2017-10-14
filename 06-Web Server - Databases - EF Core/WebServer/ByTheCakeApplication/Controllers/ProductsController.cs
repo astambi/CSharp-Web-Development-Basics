@@ -1,6 +1,5 @@
 ﻿namespace WebServer.ByTheCakeApplication.Controllers
 {
-    using Data;
     using Infrastructure;
     using Server.Http.Contracts;
     using Services;
@@ -16,11 +15,9 @@
         private const string SearchView = @"products\search";
 
         private readonly IProductService productService;
-        private readonly CakesData cakesData;
 
         public ProductsController()
         {
-            this.cakesData = new CakesData();
             this.productService = new ProductService();
         }
 
@@ -36,9 +33,9 @@
             // Validate Model
             if (string.IsNullOrWhiteSpace(model.Name) ||
                 string.IsNullOrWhiteSpace(model.ImageUrl) ||
-                model.Name.Length < 3 || 
+                model.Name.Length < 3 ||
                 model.Name.Length > 30 ||
-                model.ImageUrl.Length < 3 || 
+                model.ImageUrl.Length < 3 ||
                 model.ImageUrl.Length > 2000 ||
                 model.Price < 0)
             {
@@ -62,38 +59,36 @@
 
         public IHttpResponse Search(IHttpRequest req)
         {
-            const string searchTermKey = "searchTerm";
-
-            var urlParameters = req.UrlParameters;
+            const string SearchTermKey = "searchTerm";
 
             this.ViewData["results"] = string.Empty;
-            this.ViewData["searchTerm"] = string.Empty;
 
-            if (urlParameters.ContainsKey(searchTermKey))
+            // Get searchTerm
+            var urlParameters = req.UrlParameters;
+
+            var searchTerm = urlParameters.ContainsKey(SearchTermKey)
+                            ? urlParameters[SearchTermKey]
+                            : null;
+
+            this.ViewData["searchTerm"] = searchTerm;
+
+            // Get products from db
+            var result = this.productService.All(searchTerm);
+
+            // List Products 
+            if (!result.Any())
             {
-                var searchTerm = urlParameters[searchTermKey];
-
-                this.ViewData["searchTerm"] = searchTerm;
-
-                var savedCakesDivs = this.cakesData
-                    .All()
-                    .Where(c => c.Name.ToLower().Contains(searchTerm.ToLower()))
-                    .Select(c => $@"<div>{c.Name} - ${c.Price:F2} <a href=""/shopping/add/{c.Id}?{searchTermKey}={searchTerm}"">Order</a></div>");
-
-                var results = "No cakes found";
-
-                if (savedCakesDivs.Any())
-                {
-                    results = string.Join(Environment.NewLine, savedCakesDivs);
-                }
-
-                this.ViewData["results"] = results;
+                this.ViewData["results"] = "No cakes found";
             }
             else
             {
-                this.ViewData["results"] = "Please, enter search term";
+                var allProducts = result
+                    .Select(p => $@"<div>{p.Name} - ${p.Price:F2} <a href=""/shopping/add/{p.Id}?{SearchTermKey}={searchTerm}"">Order</a></div>");
+
+                this.ViewData["results"] = string.Join(Environment.NewLine, allProducts);
             }
 
+            // View Shopping Cart
             this.ViewData["showCart"] = "none";
 
             var shoppingCart = req.Session.Get<ShoppingCart>(ShoppingCart.SessionKey);
@@ -107,7 +102,7 @@
                 this.ViewData["products"] = $"{totalProducts} {totalProductsText}";
             }
 
-            return this.FileViewResponse(@"cakes\search");
+            return this.FileViewResponse(SearchView);
         }
     }
 }

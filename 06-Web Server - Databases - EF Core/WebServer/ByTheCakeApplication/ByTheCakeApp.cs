@@ -23,22 +23,19 @@
                     "/about",
                     req => new HomeController().About());
 
+            // Calculator
             appRouteConfig
                 .Get(
-                    "/search",
-                    req => new ProductsController().Search(req));
+                    "/calculator",
+                    req => new CalculatorController().Calculate());
 
-            // Calculator
-            appRouteConfig.Get(
-                "/calculator",
-                req => new CalculatorController().Calculate());
-
-            appRouteConfig.Post(
-                "calculator",
-                req => new CalculatorController().Calculate(
-                    req.FormData["number1"],
-                    req.FormData["number2"],
-                    req.FormData["mathOperator"]));
+            appRouteConfig
+                .Post(
+                    "calculator",
+                    req => new CalculatorController().Calculate(
+                        req.FormData["number1"],
+                        req.FormData["number2"],
+                        req.FormData["mathOperator"]));
 
             // Register
             appRouteConfig
@@ -105,18 +102,33 @@
                             ImageUrl = req.FormData["imageUrl"]
                         }));
 
+            // Browse Products
+            appRouteConfig
+                .Get(
+                    "/search",
+                    req => new ProductsController().Search(req));
+
+            // Product Details
+            appRouteConfig
+                .Get(
+                    "/products/{(?<id>[0-9]+)}",
+                    req => new ProductsController().Details(int.Parse(req.UrlParameters["id"])));
+
             // Shopping Cart
-            appRouteConfig.Get(
+            appRouteConfig
+                .Get(
                     "/shopping/add/{(?<id>[0-9]+)}",
                     req => new ShoppingController().AddToCart(req));
 
-            appRouteConfig.Get(
-                "/cart",
-                req => new ShoppingController().ShowCart(req));
+            appRouteConfig
+                .Get(
+                    "/cart",
+                    req => new ShoppingController().ShowCart(req));
 
-            appRouteConfig.Post(
-                "/shopping/finish-order",
-                req => new ShoppingController().FinishOrder(req));
+            appRouteConfig
+                .Post(
+                    "/shopping/finish-order",
+                    req => new ShoppingController().FinishOrder(req));
         }
 
         public void InitializeDatabase()

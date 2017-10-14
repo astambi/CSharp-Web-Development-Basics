@@ -47,5 +47,22 @@
                        .ToList();
             }
         }
+
+        public ProductDetailsViewModel Find(int id)
+        {
+            using (var context = new ByTheCakeDbContext())
+            {
+                return context
+                       .Products
+                       .Where(p => p.Id == id)
+                       .Select(p => new ProductDetailsViewModel
+                       {
+                           Name = p.Name,
+                           Price = p.Price,
+                           ImageUrl = p.ImageUrl
+                       })
+                       .FirstOrDefault();
+            }
+        }
     }
 }

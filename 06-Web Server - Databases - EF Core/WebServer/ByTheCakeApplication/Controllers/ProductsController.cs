@@ -2,6 +2,7 @@
 {
     using Infrastructure;
     using Server.Http.Contracts;
+    using Server.Http.Response;
     using Services;
     using Services.Contracts;
     using System;
@@ -13,6 +14,7 @@
     {
         private const string AddView = @"products\add";
         private const string SearchView = @"products\search";
+        private const string DetailsView = @"products\details";
 
         private readonly IProductService productService;
 
@@ -83,7 +85,7 @@
             else
             {
                 var allProducts = result
-                    .Select(p => $@"<div>{p.Name} - ${p.Price:F2} <a href=""/shopping/add/{p.Id}?{SearchTermKey}={searchTerm}"">Order</a></div>");
+                    .Select(p => $@"<div><a href=""/products/{p.Id}"">{p.Name}</a> - ${p.Price:F2} <a href=""/shopping/add/{p.Id}?{SearchTermKey}={searchTerm}"">Order</a></div>");
 
                 this.ViewData["results"] = string.Join(Environment.NewLine, allProducts);
             }
@@ -103,6 +105,24 @@
             }
 
             return this.FileViewResponse(SearchView);
+        }
+
+        public IHttpResponse Details(int id)
+        {
+            // Get product from db
+            var product = this.productService.Find(id);
+
+            if (product == null)
+            {
+                return new NotFoundResponse();
+            }
+
+            // Return View
+            this.ViewData["name"] = product.Name;
+            this.ViewData["price"] = product.Price.ToString("F2");
+            this.ViewData["imageUrl"] = product.ImageUrl;
+
+            return this.FileViewResponse(DetailsView);
         }
     }
 }

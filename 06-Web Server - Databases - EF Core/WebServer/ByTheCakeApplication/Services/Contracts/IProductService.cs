@@ -8,5 +8,7 @@
         void Create(string name, decimal price, string imageUrl);
 
         IEnumerable<ProductListingViewModel> All(string searchTerm = null);
+
+        ProductDetailsViewModel Find(int id);
     }
 }

@@ -46,5 +46,11 @@
 
             return layoutHtml.Replace(ContentPlaceholder, fileHtml);
         }
+
+        protected void AddError(string errorMessage)
+        {
+            this.ViewData["showError"] = "block";
+            this.ViewData["error"] = errorMessage;
+        }
     }
 }

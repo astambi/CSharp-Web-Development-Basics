@@ -3,41 +3,61 @@
     using Data;
     using Infrastructure;
     using Server.Http.Contracts;
+    using Services;
+    using Services.Contracts;
     using System;
     using System.Linq;
     using ViewModels;
+    using ViewModels.Products;
 
     public class ProductsController : Controller
     {
+        private const string AddView = @"products\add";
+        private const string SearchView = @"products\search";
+
+        private readonly IProductService productService;
         private readonly CakesData cakesData;
 
         public ProductsController()
         {
             this.cakesData = new CakesData();
+            this.productService = new ProductService();
         }
 
         public IHttpResponse Add()
         {
             this.ViewData["showResult"] = "none";
 
-            return this.FileViewResponse(@"cakes\add");
+            return this.FileViewResponse(AddView);
         }
 
-        public IHttpResponse Add(string name, string price)
+        public IHttpResponse Add(IHttpRequest req, AddProductViewModel model)
         {
-            var cake = new Cake
+            // Validate Model
+            if (string.IsNullOrWhiteSpace(model.Name) ||
+                string.IsNullOrWhiteSpace(model.ImageUrl) ||
+                model.Name.Length < 3 || 
+                model.Name.Length > 30 ||
+                model.ImageUrl.Length < 3 || 
+                model.ImageUrl.Length > 2000 ||
+                model.Price < 0)
             {
-                Name = name,
-                Price = decimal.Parse(price)
-            };
+                this.AddError("Invalid product details");
+                this.ViewData["showResult"] = "none";
 
-            this.cakesData.Add(name, price);
+                return this.FileViewResponse(AddView);
+            }
 
-            this.ViewData["name"] = name;
-            this.ViewData["price"] = price;
+            // Create Product in db
+            this.productService.Create(model.Name, model.Price, model.ImageUrl);
+
+            // Update View
             this.ViewData["showResult"] = "block";
+            this.ViewData["name"] = model.Name;
+            this.ViewData["price"] = model.Price.ToString("F2");
+            this.ViewData["imageUrl"] = model.ImageUrl;
 
-            return this.FileViewResponse(@"cakes\add");
+            return this.FileViewResponse(AddView);
         }
 
         public IHttpResponse Search(IHttpRequest req)

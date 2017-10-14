@@ -14,7 +14,7 @@
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             builder
-                .UseSqlServer(@"Server=.;Database=ByTheCakeDb;Integrated Security=True;");
+                .UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=ByTheCakeDb;Integrated Security=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

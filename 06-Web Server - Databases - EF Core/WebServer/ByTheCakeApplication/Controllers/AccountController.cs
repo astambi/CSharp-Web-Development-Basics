@@ -16,9 +16,6 @@
         private const string LoginView = @"account\login";
         private const string ProfileView = @"account\profile";
 
-        private const string ShowError = "showError";
-        private const string Error = "error";
-
         private IUserService userService;
 
         public AccountController()
@@ -41,13 +38,15 @@
             if (string.IsNullOrWhiteSpace(model.Username) ||
                 string.IsNullOrWhiteSpace(model.Password) ||
                 string.IsNullOrWhiteSpace(model.ConfirmPassword) ||
-                model.Username.Length < 3 || model.Username.Length > 20 ||
-                model.Password.Length < 3 || model.Password.Length > 100 ||
-                model.ConfirmPassword.Length < 3 || model.ConfirmPassword.Length > 100 ||
+                model.Username.Length < 3 || 
+                model.Username.Length > 20 ||
+                model.Password.Length < 3 || 
+                model.Password.Length > 100 ||
+                model.ConfirmPassword.Length < 3 || 
+                model.ConfirmPassword.Length > 100 ||
                 model.ConfirmPassword != model.Password)
             {
-                this.ViewData[ShowError] = "block";
-                this.ViewData[Error] = "Invalid user details";
+                this.AddError("Invalid user details");
 
                 return this.FileViewResponse(RegisterView);
             }
@@ -57,13 +56,12 @@
 
             if (!success)
             {
-                this.ViewData[ShowError] = "block";
-                this.ViewData[Error] = "Username is already taken";
+                this.AddError("Username is already taken");
 
                 return this.FileViewResponse(RegisterView);
             }
 
-            // Login User 
+            // Add logged in user to session
             this.LoginUser(req, model.Username);
 
             // Redirect to Home
@@ -85,8 +83,7 @@
             if (string.IsNullOrWhiteSpace(model.Username) ||
                 string.IsNullOrWhiteSpace(model.Password))
             {
-                this.ViewData[ShowError] = "block";
-                this.ViewData[Error] = "You have empty fields";
+                this.AddError("You have empty fields");
 
                 return this.FileViewResponse(LoginView);
             }
@@ -96,13 +93,12 @@
 
             if (!success)
             {
-                this.ViewData[ShowError] = "block";
-                this.ViewData[Error] = "Invalid user credentials";
+                this.AddError("Invalid user credentials");
 
                 return this.FileViewResponse(LoginView);
             }
 
-            // Login User
+            // Add logged in user to session
             this.LoginUser(req, model.Username);
 
             // Redirect to Home

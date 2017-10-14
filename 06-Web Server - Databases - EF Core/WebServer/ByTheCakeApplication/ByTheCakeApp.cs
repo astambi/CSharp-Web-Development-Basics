@@ -7,6 +7,7 @@
     using Server.Routing.Contracts;
     using System;
     using ViewModels.Account;
+    using ViewModels.Products;
 
     public class ByTheCakeApp : IApplication
     {
@@ -19,16 +20,6 @@
             appRouteConfig.Get(
                 "/about",
                 req => new HomeController().About());
-
-            appRouteConfig.Get(
-                "/add",
-                req => new ProductsController().Add());
-
-            appRouteConfig.Post(
-                "/add",
-                req => new ProductsController().Add(
-                    req.FormData["name"],
-                    req.FormData["price"]));
 
             appRouteConfig.Get(
                 "/search",
@@ -48,53 +39,72 @@
             // Register
             appRouteConfig
                 .Get(
-                "/register",
-                req => new AccountController().Register());
+                    "/register",
+                    req => new AccountController().Register());
 
             appRouteConfig
                 .Post(
-                "/register",
-                req => new AccountController().Register(
-                    req,
-                    new RegisterViewModel
-                    {
-                        Username = req.FormData["username"],
-                        Password = req.FormData["password"],
-                        ConfirmPassword = req.FormData["confirm-password"]
-                    }));
+                    "/register",
+                    req => new AccountController().Register(
+                        req,
+                        new RegisterViewModel
+                        {
+                            Username = req.FormData["username"],
+                            Password = req.FormData["password"],
+                            ConfirmPassword = req.FormData["confirm-password"]
+                        }));
 
             // Login
             appRouteConfig
                 .Get(
-                "/login",
-                req => new AccountController().Login());
+                    "/login",
+                    req => new AccountController().Login());
 
             appRouteConfig
                 .Post(
-                "/login",
-                req => new AccountController().Login(
-                    req,
-                    new LoginViewModel
-                    {
-                        Username = req.FormData["username"],
-                        Password = req.FormData["password"]
-                    }));
+                    "/login",
+                    req => new AccountController().Login(
+                        req,
+                        new LoginViewModel
+                        {
+                            Username = req.FormData["username"],
+                            Password = req.FormData["password"]
+                        }));
 
             // Logout
-            appRouteConfig.Post(
-                "/logout",
-                req => new AccountController().Logout(req));
+            appRouteConfig
+                .Post(
+                    "/logout",
+                    req => new AccountController().Logout(req));
 
             // Profile
             appRouteConfig
                 .Get(
-                "/profile", 
-                req => new AccountController().Profile(req));
+                    "/profile",
+                    req => new AccountController().Profile(req));
+
+            // Add Product
+            appRouteConfig
+                .Get(
+                    "/add",
+                    req => new ProductsController().Add());
+
+            appRouteConfig
+                .Post(
+                    "/add",
+                    req => new ProductsController().Add(
+                        req,
+                        new AddProductViewModel
+                        {
+                            Name = req.FormData["name"],
+                            Price = decimal.Parse(req.FormData["price"]),
+                            ImageUrl = req.FormData["imageUrl"]
+                        }));
 
             // Shopping Cart
             appRouteConfig.Get(
-                "/shopping/add/{(?<id>[0-9]+)}",
-                req => new ShoppingController().AddToCart(req));
+                    "/shopping/add/{(?<id>[0-9]+)}",
+                    req => new ShoppingController().AddToCart(req));
 
             appRouteConfig.Get(
                 "/cart",

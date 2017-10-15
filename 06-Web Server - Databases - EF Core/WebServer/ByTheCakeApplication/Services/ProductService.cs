@@ -64,5 +64,31 @@
                        .FirstOrDefault();
             }
         }
+
+        public bool Exists(int id)
+        {
+            using (var context = new ByTheCakeDbContext())
+            {
+                return context
+                      .Products
+                      .Any(p => p.Id == id);
+            }
+        }
+
+        public IEnumerable<ProductInCartViewModel> FindProductsInCart(IEnumerable<int> ids)
+        {
+            using (var context = new ByTheCakeDbContext())
+            {
+                return context
+                      .Products
+                      .Where(p => ids.Contains(p.Id))
+                      .Select(p => new ProductInCartViewModel
+                      {
+                          Name = p.Name,
+                          Price = p.Price
+                      })
+                      .ToList();
+            }
+        }
     }
 }

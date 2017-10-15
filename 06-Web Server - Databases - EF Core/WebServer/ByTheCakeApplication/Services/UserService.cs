@@ -61,5 +61,19 @@
                       .FirstOrDefault();
             }
         }
+
+        public int? GetUserId(string username)
+        {
+            using (var context = new ByTheCakeDbContext())
+            {
+                var id = context
+                        .Users
+                        .Where(u => u.Username == username)
+                        .Select(u => u.Id)
+                        .FirstOrDefault();
+
+                return id != 0 ? (int?)id : null;
+            }
+        }
     }
 }

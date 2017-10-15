@@ -10,8 +10,6 @@
 
         ProfileViewModel Profile(string username);
 
-
-
-        // todo
+        int? GetUserId(string username);
     }
 }

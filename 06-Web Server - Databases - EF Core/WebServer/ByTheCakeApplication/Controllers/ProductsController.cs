@@ -95,9 +95,9 @@
 
             var shoppingCart = req.Session.Get<ShoppingCart>(ShoppingCart.SessionKey);
 
-            if (shoppingCart.Orders.Any())
+            if (shoppingCart.ProductIds.Any())
             {
-                var totalProducts = shoppingCart.Orders.Count;
+                var totalProducts = shoppingCart.ProductIds.Count;
                 var totalProductsText = totalProducts != 1 ? "products" : "product";
 
                 this.ViewData["showCart"] = "block";

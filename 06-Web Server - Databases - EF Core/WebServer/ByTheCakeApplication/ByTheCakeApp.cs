@@ -129,6 +129,20 @@
                 .Post(
                     "/shopping/finish-order",
                     req => new ShoppingController().FinishOrder(req));
+
+            // My Orders
+            appRouteConfig
+                .Get(
+                    "/orders",
+                    req => new ShoppingController().ShowOrders(req));
+
+            // Order Details
+            appRouteConfig
+                .Get(
+                    "/orders/{(?<id>[0-9]+)}",
+                    req => new ShoppingController().OrderDetails(
+                        req,
+                        int.Parse(req.UrlParameters["id"])));
         }
 
         public void InitializeDatabase()

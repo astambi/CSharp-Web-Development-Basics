@@ -4,6 +4,7 @@
     using Server.Http.Contracts;
     using Server.Http.Response;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Linq;
 
@@ -16,8 +17,9 @@
         {
             this.ViewData = new Dictionary<string, string>
             {
-                ["authDisplay"] = "block",  // show logout button
-                ["showError"] = "none"      // hide form errors
+                ["anonymousDisplay"] = "none",  // guest users
+                ["authDisplay"] = "flex",       // show logout button // previous block
+                ["showError"] = "none"          // hide form errors
             };
         }
 
@@ -40,6 +42,38 @@
             return new ViewResponse(HttpStatusCode.Ok, new FileView(resultHtml));
         }
 
+        protected IHttpResponse RedirectResponse(string route)
+        {
+            return new RedirectResponse(route);
+        }
+
+        protected void AddError(string errorMessage)
+        {
+            this.ViewData["showError"] = "block";
+            this.ViewData["error"] = errorMessage;
+        }
+
+        protected bool ValidateModel(object model)
+        {
+            var context = new ValidationContext(model);
+            var results = new List<ValidationResult>();
+
+            if (Validator.TryValidateObject(model, context, results, true) == false)
+            {
+                foreach (var result in results)
+                {
+                    if (result != ValidationResult.Success)
+                    {
+                        this.AddError(result.ErrorMessage);
+
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private string ProcessFileHtml(string fileName)
         {
             var layoutHtml = File.ReadAllText(string.Format(
@@ -49,12 +83,6 @@
                             DefaultPath, this.ApplicationDirectory, fileName));
 
             return layoutHtml.Replace(ContentPlaceholder, fileHtml);
-        }
-
-        protected void AddError(string errorMessage)
-        {
-            this.ViewData["showError"] = "block";
-            this.ViewData["error"] = errorMessage;
         }
     }
 }

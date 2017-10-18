@@ -1,10 +1,10 @@
 ﻿namespace WebServer.GameStoreApplication.Controllers
 {
+    using Server.Http;
     using Server.Http.Contracts;
     using Services;
     using Services.Contracts;
     using ViewModels.Account;
-    using WebServer.Server.Http;
 
     public class AccountController : BaseController
     {
@@ -14,15 +14,14 @@
 
         private readonly IUserService userService;
 
-        public AccountController()
+        public AccountController(IHttpRequest request)
+            : base(request)
         {
             this.userService = new UserService();
         }
 
         public IHttpResponse Register()
         {
-            this.SetDefaultView();
-
             return this.FileViewResponse(RegisterView);
         }
 
@@ -43,18 +42,19 @@
                 return this.Register();
             }
 
-            // Redirect to Login
-            return this.RedirectResponse("/account/login");
+            // Login User
+            this.LoginUser(model.Email);
+
+            // Redirect to Home
+            return this.RedirectResponse("/");
         }
 
         public IHttpResponse Login()
         {
-            this.SetDefaultView();
-
             return this.FileViewResponse(LoginView);
         }
 
-        public IHttpResponse Login(IHttpRequest req, LoginViewModel model)
+        public IHttpResponse Login(LoginViewModel model)
         {
             // Validate model
             if (!this.ValidateModel(model))
@@ -72,7 +72,7 @@
             }
 
             // Save sesssion
-            req.Session.Add(SessionStore.CurrentUserKey, model.Email);
+            LoginUser(model.Email);
 
             // Redirect to Home
             return this.RedirectResponse("/");
@@ -86,11 +86,9 @@
             return this.RedirectResponse("/");
         }
 
-        private void SetDefaultView()
+        private void LoginUser(string email)
         {
-            this.ViewData["anonymousDisplay"] = "flex";
-            this.ViewData["authDisplay"] = "none";
-
+            this.Request.Session.Add(SessionStore.CurrentUserKey, email);
         }
     }
 }

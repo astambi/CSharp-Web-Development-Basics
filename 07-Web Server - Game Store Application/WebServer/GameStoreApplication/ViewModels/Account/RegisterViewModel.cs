@@ -11,7 +11,6 @@
         [MaxLength(
             ValidationConstants.Account.EmailMaxLength,
             ErrorMessage = ValidationConstants.InvalidMaxLengthErrorMessage)]
-        //[EmailAddress]
         [Email]
         public string Email { get; set; }
 

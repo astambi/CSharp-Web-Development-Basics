@@ -3,23 +3,24 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    public class EmailAttribute : ValidationAttribute
+    public class PasswordAttribute : ValidationAttribute
     {
-        public EmailAttribute()
+        public PasswordAttribute()
         {
-            this.ErrorMessage = "Email should contain @ sign and a period.";
+            this.ErrorMessage = "Password should be at least 6 symbols long and contain at least 1 uppercase, 1 lowercase letter and 1 digit";
         }
 
         public override bool IsValid(object value)
         {
-            var email = value as string;
-            if (email == null)
+            var password = value as string;
+            if (password == null)
             {
                 return false;
             }
 
-            return email.Contains('@') &&
-                   email.Contains('.');
+            return password.Any(s => char.IsUpper(s)) &&
+                   password.Any(s => char.IsLower(s)) &&
+                   password.Any(s => char.IsDigit(s));
         }
     }
 }

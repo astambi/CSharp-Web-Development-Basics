@@ -6,5 +6,6 @@
 
         bool Find(string email, string password);
 
+        bool IsAdmin(string email);
     }
 }

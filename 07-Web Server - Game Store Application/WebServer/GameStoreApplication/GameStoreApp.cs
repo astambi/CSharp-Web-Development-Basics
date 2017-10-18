@@ -20,13 +20,17 @@
             // Routes
             appRouteConfig
                 .Get(
+                    "/", req => new HomeController(req).Index());
+
+            appRouteConfig
+                .Get(
                     "/account/register",
-                    req => new AccountController().Register());
+                    req => new AccountController(req).Register());
 
             appRouteConfig
                .Post(
                    "/account/register",
-                   req => new AccountController().Register(
+                   req => new AccountController(req).Register(
                        new RegisterViewModel
                        {
                            Email = req.FormData["email"],
@@ -38,13 +42,12 @@
             appRouteConfig
                 .Get(
                     "/account/login",
-                    req => new AccountController().Login());
+                    req => new AccountController(req).Login());
 
             appRouteConfig
                 .Post(
                     "/account/login",
-                    req => new AccountController().Login(
-                        req,
+                    req => new AccountController(req).Login(
                         new LoginViewModel
                         {
                             Email = req.FormData["email"],
@@ -54,7 +57,14 @@
             appRouteConfig
                 .Post(
                     "/account/logout",
-                    req => new AccountController().Logout(req));
+                    req => new AccountController(req).Logout(req));
+
+
+
+
+
+
+
 
 
         }

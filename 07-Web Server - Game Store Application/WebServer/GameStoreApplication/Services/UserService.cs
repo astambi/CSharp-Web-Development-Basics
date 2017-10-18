@@ -41,9 +41,16 @@
         {
             using (var context = new GameStoreDbContext())
             {
-                return context.Users
-                      .Any(u => u.Email == email &&
-                                u.Password == password);
+                return context.Users.Any(u => u.Email == email && u.Password == password);
+            }
+        }
+
+        public bool IsAdmin(string email)
+        {
+            using (var context = new GameStoreDbContext())
+            {
+                return context.Users.Any(u => u.Email == email && 
+                                              u.IsAdmin);
             }
         }
     }

@@ -16,5 +16,15 @@
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 50;
         }
+
+        public class Game
+        {
+            public const int TitleMinLength = 3;
+            public const int TitleMaxLength = 100;
+
+            public const int VideoLength = 11;
+
+            public const int DescriptionMinLength = 20;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace WebServer.GameStoreApplication.Data.Models
 {
+    using Common;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -9,13 +10,13 @@
         public int Id { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(100)]
+        [MinLength(ValidationConstants.Game.TitleMinLength)]
+        [MaxLength(ValidationConstants.Game.TitleMaxLength)]
         public string Title { get; set; }
 
         [Required]
-        [MinLength(11)]
-        [MaxLength(11)]
+        [MinLength(ValidationConstants.Game.VideoLength)]
+        [MaxLength(ValidationConstants.Game.VideoLength)]
         public string VideoId { get; set; }
 
         [Required]
@@ -27,7 +28,7 @@
         public decimal Price { get; set; }
 
         [Required]
-        [MinLength(20)]
+        [MinLength(ValidationConstants.Game.DescriptionMinLength)]
         public string Description { get; set; }
 
         public DateTime ReleaseDate { get; set; }

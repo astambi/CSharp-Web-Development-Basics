@@ -46,7 +46,7 @@
             this.LoginUser(model.Email);
 
             // Redirect to Home
-            return this.RedirectResponse("/");
+            return this.RedirectResponse(HomePath);
         }
 
         public IHttpResponse Login()
@@ -75,7 +75,7 @@
             LoginUser(model.Email);
 
             // Redirect to Home
-            return this.RedirectResponse("/");
+            return this.RedirectResponse(HomePath);
         }
 
         public IHttpResponse Logout(IHttpRequest req)
@@ -83,7 +83,7 @@
             req.Session.Clear();
 
             // Redirect to Home
-            return this.RedirectResponse("/");
+            return this.RedirectResponse(HomePath);
         }
 
         private void LoginUser(string email)

@@ -1,5 +1,6 @@
 ﻿namespace WebServer.GameStoreApplication.Controllers
 {
+    using Common;
     using Infrastructure;
     using Server.Http;
     using Server.Http.Contracts;
@@ -14,21 +15,18 @@
 
         protected BaseController(IHttpRequest request)
         {
-            this.users = new UserService();
-
             this.Request = request;
-
-            //this.Authentication = new Authentication(false, false);
-
+            this.Authentication = new Authentication(false, false);
+            this.users = new UserService();
 
             this.ApplyAuthentication();
         }
 
-        protected IHttpRequest Request { get; private set; }
-
         protected override string ApplicationDirectory => "GameStoreApplication";
 
-        //protected Authentication Authentication { get; private set; }
+        protected Authentication Authentication { get; private set; }
+
+        protected IHttpRequest Request { get; private set; }
 
         private void ApplyAuthentication()
         {
@@ -54,14 +52,12 @@
                     adminDisplay = "flex";
                 }
 
-                //this.Authentication = new Authentication(true, isAdmin);
+                this.Authentication = new Authentication(true, isAdmin);
             }
 
             this.ViewData["anonymousDisplay"] = anonymousDisplay;
             this.ViewData["authDisplay"] = authDisplay;
             this.ViewData["adminDisplay"] = adminDisplay;
         }
-
-
     }
 }

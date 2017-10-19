@@ -6,7 +6,9 @@
     using Server.Contracts;
     using Server.Routing.Contracts;
     using System;
+    using System.Globalization;
     using ViewModels.Account;
+    using ViewModels.Admin;
 
     public class GameStoreApp : IApplication
     {
@@ -59,14 +61,33 @@
                     "/account/logout",
                     req => new AccountController(req).Logout(req));
 
+            appRouteConfig
+                .Get(
+                    "/admin/games/add",
+                    req => new AdminController(req).Add());
 
+            appRouteConfig
+                .Post(
+                    "/admin/games/add",
+                    req => new AdminController(req).Add(
+                        new AdminAddGameViewModel
+                        {
+                            Title = req.FormData["title"],
+                            Description = req.FormData["description"],
+                            ImageUrl = req.FormData["thumbnail"],
+                            VideoId = req.FormData["video-id"],
+                            ReleaseDate = DateTime.ParseExact(
+                                          req.FormData["release-date"],
+                                          "yyyy-MM-dd",
+                                          CultureInfo.InvariantCulture),
+                            Price = decimal.Parse(req.FormData["price"]),
+                            Size = double.Parse(req.FormData["size"]),
+                        }));
 
-
-
-
-
-
-
+            appRouteConfig
+                .Get(
+                    "/admin/games/list",
+                    req => new AdminController(req).List());
         }
 
         public void InitializeDatabase()

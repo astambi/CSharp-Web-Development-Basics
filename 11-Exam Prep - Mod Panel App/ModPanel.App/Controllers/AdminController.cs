@@ -7,7 +7,6 @@
     using Services.Contracts;
     using SimpleMvc.Framework.Attributes.Methods;
     using SimpleMvc.Framework.Contracts;
-    using System.Collections.Generic;
     using System.Linq;
 
     public class AdminController : BaseController
@@ -228,6 +227,7 @@
             if (!result)
             {
                 this.ShowError(string.Format(PostNotFound, id));
+                return this.Posts();
             }
 
             // Log Admin activity
@@ -236,8 +236,7 @@
                 this.Log(LogType.DeletePost, post.Title);
             }
 
-            return this.Posts();
-            //return this.Redirect(AdminPostsPath);
+            return this.Redirect(AdminPostsPath);
         }
 
         public IActionResult Log()
@@ -270,31 +269,5 @@
             this.ViewModel["title"] = post.Title;
             this.ViewModel["content"] = post.Content;
         }
-
-        // Does not return the correct view for an non-existing id
-        //private IActionResult PrepareEditAndDeleteView(int id)
-        //{
-        //    // Accessible to Admins only
-        //    if (!this.IsAdmin)
-        //    {
-        //        return this.RedirectToLogin();
-        //    }
-
-        //    // Get post from db
-        //    var post = this.postService.GetById(id);
-
-        //    // Post Not Found error
-        //    if (post == null)
-        //    {
-        //        this.ShowError(string.Format(PostNotFound, id));
-        //        return this.Posts();
-        //    }
-
-        //    // Prepare View 
-        //    this.GetPostViewData(post);
-
-        //    return null; // returns the calling view afterwards
-        //}
-
     }
 }

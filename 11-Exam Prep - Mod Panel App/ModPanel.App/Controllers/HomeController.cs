@@ -1,7 +1,6 @@
 ﻿namespace ModPanel.App.Controllers
 {
     using Infrastructure;
-    using Services;
     using Services.Contracts;
     using SimpleMvc.Framework.Contracts;
     using System;
@@ -12,10 +11,12 @@
         private readonly IPostService postService;
         private readonly ILogService logService;
 
-        public HomeController()
+        public HomeController(
+            IPostService postService,
+            ILogService logService) 
         {
-            this.postService = new PostService();
-            this.logService = new LogService();
+            this.postService = postService;
+            this.logService = logService;
         }
 
         public IActionResult Index()

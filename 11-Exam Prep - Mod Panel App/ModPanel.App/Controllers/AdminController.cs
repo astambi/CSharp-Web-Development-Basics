@@ -3,7 +3,6 @@
     using Data.Models;
     using Infrastructure;
     using Models.Posts;
-    using Services;
     using Services.Contracts;
     using SimpleMvc.Framework.Attributes.Methods;
     using SimpleMvc.Framework.Contracts;
@@ -21,11 +20,14 @@
         private readonly IPostService postService;
         private readonly ILogService logService;
 
-        public AdminController()
+        public AdminController(
+            IUserService userService,
+            IPostService postService,
+            ILogService logService)
         {
-            this.userService = new UserService();
-            this.postService = new PostService();
-            this.logService = new LogService();
+            this.userService = userService;
+            this.postService = postService;
+            this.logService = logService;
         }
 
         public IActionResult Users()
@@ -39,18 +41,7 @@
             // Prepare view 
             var usersRows = this.userService
                 .All()
-                .Select(u => $@"
-                    <tr>
-                        <td>{u.Id}</td>
-                        <td>{u.Email}</td>
-                        <td>{u.Position.ToFriendlyNamePosition()}</td>
-                        <td class=""text-right"">{u.Posts}</td>
-                        <td>
-                            {(u.IsApproved
-                            ? string.Empty
-                            : $@"<a class=""btn btn-primary"" href=""/admin/approve?id={u.Id}"">Approve</a>")}                            
-                        </td>
-                    </tr>")
+                .Select(u => u.ToHtml())
                 .ToList();
 
             this.ViewModel["users"] = string.Join(string.Empty, usersRows);
@@ -95,15 +86,7 @@
             // Prepare view 
             var postsTable = this.postService
                 .All()
-                .Select(p => $@"
-                    <tr>
-                        <td>{p.Id}</td>
-                        <td class=""text-capitalize"">{p.Title}</td>
-                        <td>
-                            <a href=""/admin/edit?id={p.Id}"" class=""btn btn-sm btn-warning"">Edit</a>
-                            <a href=""/admin/delete?id={p.Id}"" class=""btn btn-sm btn-danger"">Delete</a>
-                        </td>
-                    </tr>")
+                .Select(p => p.ToHtml())
                 .ToList();
 
             this.ViewModel["posts"] = string.Join(string.Empty, postsTable);

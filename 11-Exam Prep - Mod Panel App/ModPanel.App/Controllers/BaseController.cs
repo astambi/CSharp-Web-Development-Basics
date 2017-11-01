@@ -19,7 +19,7 @@
 
         public BaseController()
         {
-            this.logService = new LogService();
+            this.logService = new LogService(new ModPanelDbContext());
 
             this.ViewModel["anonymousDisplay"] = "flex";
             this.ViewModel["userDisplay"] = "none";

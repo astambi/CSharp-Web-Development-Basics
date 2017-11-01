@@ -1,6 +1,8 @@
 ﻿namespace ModPanel.App
 {
     using Data;
+    using Infrastructure;
+    using Infrastructure.Mapping;
     using Microsoft.EntityFrameworkCore;
     using SimpleMvc.Framework;
     using SimpleMvc.Framework.Routers;
@@ -14,13 +16,18 @@
             {
                 context.Database.Migrate();
             }
+
+            AutoMapperConfiguration.Initialize();
         }
 
 
         public static void Main()
-            => MvcEngine.Run(new WebServer(
-                            1337,
-                            new ControllerRouter(),
-                            new ResourceRouter()));
+        {
+            MvcEngine.Run(
+                new WebServer(
+                    1337,
+                    DependencyControllerRouter.Get(),
+                    new ResourceRouter()));
+        }
     }
 }

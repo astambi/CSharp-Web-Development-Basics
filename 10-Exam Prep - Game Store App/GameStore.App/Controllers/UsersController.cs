@@ -1,7 +1,6 @@
 ﻿namespace GameStore.App.Controllers
 {
     using Models.Users;
-    using Services;
     using Services.Contracts;
     using SimpleMvc.Framework.Attributes.Methods;
     using SimpleMvc.Framework.Contracts;
@@ -13,13 +12,11 @@
         private const string RequiredEmailAndPasswordError = "E-mail and password are required!";
         private const string InvalidUserCredentials = "Invalid e-mail or password!";
 
-        private const string LoginPage = "/users/login";
-
         private readonly IUserService userService;
 
-        public UsersController()
+        public UsersController(IUserService userService)
         {
-            this.userService = new UserService();
+            this.userService = userService;
         }
 
         public IActionResult Register()

@@ -20,7 +20,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/cart">Cart</a>
+                            <a class="nav-link" href="/orders/cart">Cart</a>
                         </li>
                     </ul>
 
@@ -70,6 +70,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 {{{error}}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="display:{{{show-success}}}">
+        <div class="col-6 ml-auto mr-auto text-center">
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{{success}}}
             </div>
         </div>
     </div>

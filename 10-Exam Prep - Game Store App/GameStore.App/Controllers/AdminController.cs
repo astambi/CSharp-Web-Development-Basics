@@ -1,8 +1,8 @@
 ﻿namespace GameStore.App.Controllers
 {
     using Data.Models;
+    using Infrastructure;
     using Models.Games;
-    using Services;
     using Services.Contracts;
     using SimpleMvc.Framework.Attributes.Methods;
     using SimpleMvc.Framework.Contracts;
@@ -15,11 +15,11 @@
         private const string GameError = @"<p>Check your form for errors!</p><p>Title has to begin with an uppercase letter and has length between 3 and 100 symbols.</p><p>Trailer must be exactly 11 characters.</p><p>Thumbnail should start with http:// or https://.</p><p>Description should be at least 20 symbols long.</p>";
         private const string GameNotFound = "The requested game #{0} does not exist in the dababase!";
 
-        private readonly IGamesService gamesService;
+        private readonly IGameService gamesService;
 
-        public AdminController()
+        public AdminController(IGameService gamesService)
         {
-            this.gamesService = new GamesService();
+            this.gamesService = gamesService;
         }
 
         public IActionResult Games()
@@ -31,21 +31,10 @@
             }
 
             // Get games from db
-            var games = this.gamesService.AllGames();
+            var games = this.gamesService.All<GameListingAdminModel>(null);
 
             // Create games table
-            var gamesRows = games
-                 .Select(g => $@"
-                    <tr>
-                        <th scope=""row"">{g.Id}</th>
-                        <td>{g.Name}</td>
-                        <td>{g.Size:f1} GB</td>
-                        <td>{g.Price:f2} &euro;</td>
-                        <td>
-                            <a href=""/admin/edit?id={g.Id}"" class=""btn btn-warning btn-sm"">Edit</a>
-                            <a href=""/admin/delete?id={g.Id}"" class=""btn btn-danger btn-sm"">Delete</a>
-                        </td>
-                    </tr>");
+            var gamesRows = games.Select(g => g.ToHtml());
 
             this.ViewModel["games"] = string.Join(string.Empty, gamesRows);
 

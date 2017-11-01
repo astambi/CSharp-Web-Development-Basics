@@ -1,29 +1,32 @@
 ﻿namespace GameStore.App
 {
     using Data;
+    using Infrastructure;
+    using Infrastructure.Mapping;
     using Microsoft.EntityFrameworkCore;
     using SimpleMvc.Framework;
     using SimpleMvc.Framework.Routers;
-    using System;
     using WebServer;
 
     public class Launcher
     {
         static Launcher()
         {
-            Console.WriteLine("Initializing database...");
-
             using (var context = new GameStoreDbContext())
             {
                 context.Database.Migrate();
             }
-        }
 
+            AutoMapperConfiguration.Initialize();
+        }
 
         public static void Main()
         {
             MvcEngine.Run(
-                new WebServer(1337, new ControllerRouter(), new ResourceRouter()));
+                new WebServer(
+                    1337,
+                    DependencyControllerRouter.Get(),
+                    new ResourceRouter()));
         }
     }
 }

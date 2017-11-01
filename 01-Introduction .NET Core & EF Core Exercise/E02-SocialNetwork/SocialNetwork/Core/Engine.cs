@@ -26,7 +26,7 @@
         public void Run()
         {
             // Initialize database 
-            InitializeDatabase();            
+            InitializeDatabase();
 
             // Seed data
             SeedUsers();                          // Profile pictures removed in Task 3
@@ -310,6 +310,7 @@
 
             var albumsData = context
                 .Albums
+                .Where(a => a.Tags.Any(t => t.TagId == tagId))
                 .OrderByDescending(a => a.Tags.Count)
                 .ThenBy(a => a.Name)
                 .Select(a => new
